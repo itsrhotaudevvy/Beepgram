@@ -68,6 +68,7 @@ configurations {
 }
 
 def keystorePwd = null
+def keystoreFile = null
 def alias = null
 def pwd = null
 def sentry_token = System.getenv("SENTRY_AUTH_TOKEN")
@@ -85,6 +86,7 @@ if (base64 != null && !base64.isBlank()) {
 
 if (properties != null) {
     keystorePwd = properties.getProperty("KEYSTORE_PASS")
+    keystoreFile = properties.getProperty("KEYSTORE_FILE")
     alias = properties.getProperty("ALIAS_NAME")
     pwd = properties.getProperty("ALIAS_PASS")
     sentry_token = properties.getProperty("SENTRY_AUTH_TOKEN", sentry_token)
@@ -114,12 +116,13 @@ android {
     buildToolsVersion '36.0.0'
     ndkVersion rootProject.ext.ndkVersion // 27.2.12479018
 
-    defaultConfig.applicationId = "xyz.nextalone.nagram"
+    defaultConfig.applicationId = "app.beepgram"
 
     sourceSets {
 
         main {
             assets.srcDirs = ["src/main/assets"]
+            kotlin { srcDirs "src/main/kotlin" }
         }
 
         debug {
@@ -239,7 +242,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile project.file("release.keystore")
+            storeFile keystoreFile != null ? file(keystoreFile) : project.file("release.keystore")
             storePassword keystorePwd
             keyAlias alias
             keyPassword pwd
@@ -429,8 +432,16 @@ dependencies {
     implementation "co.nstant.in:cbor:0.9"
 }
 
-apply plugin: "com.google.gms.google-services"
-apply plugin: "com.google.firebase.crashlytics"
+// Beepgram: only wire Firebase (FCM push, Crashlytics) when google-services.json has a client
+// for this application id. The bundled file belongs to upstream's Firebase project, which forks
+// must not use; drop in your own to enable push. Without it the app falls back to no FCM.
+def googleServicesJson = file("google-services.json")
+if (googleServicesJson.exists() && googleServicesJson.text.contains("\"${android.defaultConfig.applicationId}\"")) {
+    apply plugin: "com.google.gms.google-services"
+    apply plugin: "com.google.firebase.crashlytics"
+} else {
+    logger.lifecycle("Beepgram: no Firebase client for ${android.defaultConfig.applicationId}; building without FCM/Crashlytics.")
+}
 
 sentry {
     // Disables or enables debug log output, e.g. for for sentry-cli.

@@ -1,10 +1,9 @@
-## Description
-<!--- Describe your changes in detail here. -->
+## What changed
 
-## Issues Fixed or Closed by This PR
+<!-- Describe the change and why. Link issues with "Closes #123". -->
 
-## Check List
+## Checklist
 
-- [ ] I have tested the changes and verified that they work and don't break anything(as well as we can manage) or drop the support for previous versions.
-- [ ] My code follows the code style of this project
-- [ ] I have merged commits that are meaningless for follow-up work and confirmed that they will not cause damage to follow-up maintenance
+- [ ] I tested this change on a device or emulator
+- [ ] The change does not reintroduce Nagram branding (see `BRANDING.md`)
+- [ ] I squashed fix-up commits that add no value to the history

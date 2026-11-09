@@ -1,1 +1,1 @@
-The third-party Telegram android app.
+Third-party Telegram client based on Nagram, built toward a unified multi-network inbox.

@@ -1,238 +1,112 @@
-# Nagram
+<p align="center">
+  <img src="branding/beepgram-icon.png" width="112" height="112" alt="Beepgram icon" />
+</p>
 
-Nagram is a third-party Telegram client based on [NekoX](https://web.archive.org/web/20240306062834/https://github.com/NekoX-Dev/NekoX) with some modifications.
+<h1 align="center">Beepgram</h1>
 
-- Official Site: <https://nagram.app>
-- Channel: <https://t.me/nagram_channel>
-- Assets: <https://t.me/nagram_assets>
-- Releases: <https://github.com/NextAlone/Nagram/releases>
-- Issues: <https://github.com/NextAlone/Nagram/issues>
-- Issues (Telegram): <https://t.me/na_gram_reports/18>
+<p align="center">
+  A third-party <b>Telegram</b> client for Android, based on
+  <a href="https://github.com/NextAlone/Nagram">Nagram</a>, NekoX and Telegram for Android.
+  It is being built toward a unified, multi-network inbox.
+</p>
 
-## Branding
+<p align="center">
+  <a href="https://github.com/itsrhotaudevvy/Beepgram/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/itsrhotaudevvy/Beepgram/actions/workflows/ci.yml/badge.svg" /></a>
+  <img alt="License: GPL-3.0" src="https://img.shields.io/badge/license-GPL--3.0-0fb5a6" />
+  <img alt="Android 6.0+" src="https://img.shields.io/badge/android-6.0%2B-ff6b5e" />
+</p>
 
-Nagram's source code is licensed under GPLv3. The Nagram name and project
-identity belong to [@NextAlone](https://github.com/NextAlone); the Nagram
-application icon artwork is copyright © MaitungTM. These are separate brand
-assets. Modified, forked, and third-party distributions must use distinct
-branding and replace the Nagram brand assets. See [BRANDING.md](BRANDING.md)
-for the complete policy.
+---
 
-## Additional feature over Nagram
+- **Application ID:** `app.beepgram`
+- **License:** GPLv3 (see [`LICENSE`](LICENSE))
+- **Sibling project:** [Reefgram](https://github.com/itsrhotaudevvy/Reefgram), a Rust + Tauri
+  desktop inbox that syncs Discord, WhatsApp, Fluxer, SMS, Instagram, Messenger and X into one
+  Telegram-style view
 
-1. Nice icon (copyright © MaitungTM)
-2. Combine message
-3. Editable text style 
-4. Forced copy
-5. Invert reply
-6. Quick reply in longClick menu (thanks to @blxueya)
-7. Undo and Redo
-8. Scrollable chat preview (thanks to TeleTux)
-9. Noise suppress and voice enhance (thanks to )
+> [!NOTE]
+> Beepgram is not affiliated with Telegram, Nagram or any other network. It ships its own name,
+> launcher icon, signing key and Telegram API credentials.
 
-----
+## What's different from Nagram
 
-## NekoX Changes
+- **Own identity.** Beepgram has its own application ID, launcher icon, wordmark, notification
+  icon and splash icon. All Nagram icon artwork has been removed from the tree and the icon picker,
+  as [`BRANDING.md`](BRANDING.md) requires.
+- **Self-signed builds.** The JNI signature check is disabled so builds signed with your own key
+  run. `KEYSTORE_FILE` in `local.properties` points the build at your keystore.
+- **Bridge framework.** `TMessagesProj/src/main/kotlin/app/beepgram/bridge/` is the foundation for
+  showing chats from other networks as ordinary Telegram dialogs, without a Matrix server (see
+  below).
+- **No upstream update channel.** In-app update checks are off until you set
+  `BuildVars.GITHUB_RELEASE_URL` to your fork's releases page.
 
-- Most of Nekogram's features
-- Unlimited login accounts
-- **Proxy**
-    - Built-in VMess, Shadowsocks, SSR, Trojan-GFW proxies support (No longer maintained)
-    - Built-in public proxy (WebSocket relay via Cloudflare CDN), [documentation and for PC](https://github.com/arm64v8a/NekoXProxy)
-    - Proxy subscription support
-    - Ipv6 MTProxy support
-    - Able to parse all proxy subscription format: SIP008, ssr, v2rayN, vmess1, shit ios app formats, clash config and more
-    - Proxies import and export, remarks, speed measurement, sorting, delete unusable nodes, etc
-    - Scan the QR code (any link, can add a proxy)
-    - The ( vmess / vmess1 / ss / ssr / trojan ) proxy link in the message can be clicked
-    - Allow auto-disabling proxy when VPN is enabled
-    - Proxy automatic switcher
-    - Don't alert "Proxy unavailable" for non-current account
-- **Stickers**
-    - Custom [Emoji packs](https://web.archive.org/web/20221126140435/https://github.com/NekoX-Dev/NekoX/wiki/emoji)
-    - Add stickers without sticker pack
-    - Sticker set list backup / restore / share
-- **Internationalization**
-    - OpenCC Chinese Convert
-    - Full InstantView translation support
-    - Translation support for selected text on input and in messages
-    - Google Cloud Translate / Yandex.Translate support
-    - Force English emoji keywords to be loaded
-    - Persian calendar support
-- **Additional Options**
-    - Option to disable vibration
-    - Dialog sorting is optional "Unread and can be prioritized for reminding" etc
-    - Option to skip "regret within five seconds"
-    - Option to not send comment first when forwarding
-    - Option to use nekox chat input menu: replace record button with a menu which contains an switch to control link preview (enabled by default)
-    - Option to disable link preview by default: to prevent the server from knowing that the link is shared through Telegram.
-    - Option to ignore Android-only content restrictions (except for the Play Store version).
-    - Custom cache directory (supports external storage)
-    - Custom server (official, test DC)
-    - Option to block others from starting a secret chat with you
-    - Option to disable trending
-- **Additional Actions**
-    - Allow clicking on links in self profile
-    - Delete all messages in group
-    - Unblock all users support
-    - Login via QR code
-    - Scan and confirm the login QR code directly
-    - Allow clearing app data
-    - Proxies, groups, channels, sticker packs are able to be shared as QR codes
-    - Add "@Name" when long-pressing @user option
-    - Allow creating a group without inviting anyone
-    - Allow upgrading a group to a supergroup
-    - Mark dialogs as read using tab menu
-    - Enabled set auto delete timer option for private chats and private groups
-    - Support saving multiple selected messages to Saved Messages
-    - Support unpinning multiple selected messages
-    - View stats option for messages
-- **Optimization**
-    - Keep the original file name when downloading files
-    - View the data center you belong to when you don't have an avatar
-    - Enhanced notification service, optional version without Google Services
-    - Improved session dialog
-    - Improved link long click menu
-    - Improved hide messages from blocked users feature
-    - Don't process cleanup draft events after opening chat
-- **Others**
-    - OpenKeychain client (sign / verify / decrypt / import)
-    - Text replacer
-- **UI**
-    - Telegram X style menu for unpinning messages
-    - Built-in Material Design themes / Telegram X style icons
-- And more :)
+Everything else (features, settings, translations) follows upstream Nagram.
 
-## API and Protocol documentation
+## Bridge framework
 
-Telegram API manuals: <https://core.telegram.org/api>
+The framework is network-neutral. It contains the model and contracts, but no live connectors yet:
 
-MTProto protocol manuals: <https://core.telegram.org/mtproto>
+| File | Purpose |
+|------|---------|
+| `BridgeIds.kt` | Reserved id range (bit 56 marker, bits 48–55 network id, bits 0–47 local sequence), so bridged peers never collide with real Telegram ids. Also defines the `NetworkType` enum for the seven target networks. |
+| `Remote.kt` | The neutral model (`RemoteUser`, `RemoteChat`, `RemoteMessage`, `RemoteAttachment`, `RemoteCommand`, …) and the `BridgeSink` event interface |
+| `TextFormat.kt` | Formatting spans that map one-to-one onto Telegram message entities |
+| `NetworkConnector.kt` | The interface that every connector implements |
+| `BridgeStore.kt` | The contract for local id allocation and session persistence |
+| `Bridge.kt` | An orchestrator skeleton that owns the connectors and the sink |
 
-## Compilation Guide
+Live connectors are being developed first in [Reefgram](https://github.com/itsrhotaudevvy/Reefgram),
+which shares this model, and will then be ported here.
 
-**NOTE: For Windows users, please consider using a Linux VM (such as WSL2) or dual booting.**
+## Building
 
-Environment:
+Requirements:
 
-- Linux distribution based on Debian or Arch Linux, or macOS
+- Android SDK with `build-tools;36.0.0`, `platforms;android-36`, `ndk;27.2.12479018` and
+  `cmake;3.22.1`
+- JDK 17
 
-- Optional: `ccache` in `PATH` speeds up rebuilding the native code.
+Steps:
 
-  The third-party native libraries (FFmpeg, BoringSSL, libvpx, ...) are committed prebuilt under
-  **TMessagesProj/jni/prebuild/lib**; the `build_*.sh` scripts there, and the tools they need
-  (`go`, `yasm`, `make`, ...), are only for regenerating them.
-- Android SDK: `build-tools;33.0.0` `platforms;android-33` `ndk;27.2.12479018` `cmake;3.18.1` `cmake;3.22.1` (the default location is **$HOME/Android/SDK**, otherwise you need to specify **$ANDROID_HOME** for it)
+1. `git submodule update --init --recursive`
+2. Get **your own** Telegram API credentials at <https://my.telegram.org/auth>, and generate your
+   own keystore. Do **not** reuse Nagram's or Telegram's credentials or keys.
+3. Create `local.properties` (it is git-ignored):
 
-  It is recommended to use [Android Studio](https://developer.android.com/studio) to install, but you can also use `sdkmanager` command on distributions based on Debian:
-
-  ```shell
-  sudo apt install sdkmanager
-  sdkmanager --sdk_root $HOME/Android/SDK --install "build-tools;33.0.0" "platforms;android-33" "ndk;27.2.12479018" "cmake;3.18.1" "cmake;3.22.1"
-  ```
-
-Build: 
-
-1. Checkout submodules
-
-   ```shell
-   git submodule update --init --recursive
+   ```properties
+   TELEGRAM_APP_ID=123456
+   TELEGRAM_APP_HASH=0123456789abcdef0123456789abcdef
+   KEYSTORE_FILE=/absolute/path/to/beepgram-release.keystore
+   KEYSTORE_PASS=...
+   ALIAS_NAME=beepgram
+   ALIAS_PASS=...
    ```
 
-   The build applies **TMessagesProj/jni/patches** to `tgcalls` itself. When an update moves the `tgcalls`
-   submodule, add `--force` so the patched files are reset before the new commit is checked out.
+4. Build the native libraries: `./run init libs && ./run libs native` (set `NATIVE_TARGET=arm64-v8a`
+   to build one ABI only).
+5. Build the app: `./gradlew --no-configuration-cache TMessagesProj:assembleRelease`
 
-2. Disable signature check by removing the following lines in **TMessagesProj/jni/jni.c**:
-   ```c
-    if (verifySign(env) != JNI_OK) {
-        return JNI_ERR;
-    }
-   ```
+### CI
 
-3. Fill out `TELEGRAM_APP_ID` and `TELEGRAM_APP_HASH` in **local.properties** (from [Telegram Developer](https://my.telegram.org/auth))
+- [`ci.yml`](.github/workflows/ci.yml) builds an unsigned arm64 APK for each push and pull request,
+  and uploads it as a workflow artifact.
+- [`release.yml`](.github/workflows/release.yml) runs when you push a `v*` tag. It builds signed
+  APKs and attaches them to a draft GitHub release. It needs these repository secrets:
+  `KEYSTORE_BASE64`, `KEYSTORE_PASS`, `ALIAS_NAME`, `ALIAS_PASS`, `TELEGRAM_APP_ID` and
+  `TELEGRAM_APP_HASH`.
 
-4. Replace **TMessagesProj/google-services.json** if you want FCM to work.
+## Relationship to Nagram
 
-5. Replace **release.keystore** with yours and fill out `ALIAS_NAME`, `KEYSTORE_PASS` and `ALIAS_PASS` in **local.properties**.
+The source history and the GPL notices from Nagram, NekoX and Telegram are preserved, and accurate
+statements such as "based on Nagram" are intentional. Bugs that you can also reproduce in upstream
+Nagram should be reported [there](https://github.com/NextAlone/Nagram/issues). The original NekoX
+readme is kept in [`README.NekoX.md`](README.NekoX.md).
 
-6. Build with Gradle (the native code is compiled as part of the build):
+## Credits
 
-   ```shell
-   ./gradlew assemble<Release/Debug>
-   ```
-
-----
-
-## Compilation with GitHub Action
-
-1. Create your own `release.keystore` to replace `TMessagesProj/release.keystore`.
-
-2. Prepare LOCAL_PROPERTIES
-
-- KEYSTORE_PASS: from your keystore
-- ALIAS_NAME: from your keystore
-- ALIAS_PASS: from your keystore
-- TELEGRAM_APP_ID: from [Telegram Developer](https://my.telegram.org/auth)
-- TELEGRAM_APP_HASH: from [Telegram Developer](https://my.telegram.org/auth)
-
-```env
-KEYSTORE_PASS=123456
-ALIAS_NAME=key0
-ALIAS_PASS=123456
-TELEGRAM_APP_ID=123456
-TELEGRAM_APP_HASH=abcdefg
-```
-
-Then, use base64 to encode the above.
-
-3. Add Repo Action Secrets
-
-- LOCAL_PROPERTIES: from step 2
-- HELPER_BOT_TOKEN: from telegram [@Botfather](https://t.me/Botfather), such as `1111:abcd`; the bot that keeps the in-app update metadata
-- NAGRAM_CHANNEL_BOT_TOKEN, NAGRAM_API_ID, NAGRAM_API_HASH: the bot that posts the builds to the channels, and the Telegram API credentials its Bot API server runs with
-
-   The channels are repository variables: NAGRAM_CHANNEL_ASSETS_CHAT_ID gets every build, NAGRAM_CHANNEL_CHAT_ID gets a copy of the releases. Nothing is posted while the token or the channels are not set. A release needs its notes in `docs/releases/<version code>.md`, with optional English notes in `<version code>.en.md`.
-
-   The GitLab pipeline posts to its own channel instead, with the HELPER_BOT_TARGET CI/CD variable holding the chat id, such as `-1001234567890`.
-
-4. Disable signature check by removing the following lines in **TMessagesProj/jni/jni.c**:
-   ```c
-    if (verifySign(env) != JNI_OK) {
-        return JNI_ERR;
-    }
-   ```
-
-5. Run Release Build
-
-## FAQ
-
-#### What is the differences between Nagram, NekoX and Nekogram?
-
-Developed by different developers, read the feature list above to understand the differences.
-
-#### I've encountered a bug!
-
-First, make sure you have the latest version installed (check the channel).
-
-Then, if the issue appears in the official Telegram client too, please submit it to the officials, (be careful not to show custom clients in the description and screenshots).
-
-Then, submit it to our [bot](https://t.me/OrIssuesBot).
-
-If you experience a *crash*, you also need to click on the version number at the bottom of the settings and select "Enable Log" and send it to us.
-
-## Localization
-
-Nagram is forked from Telegram, thus most locales follows the translations of Telegram for Android, checkout <https://translations.telegram.org/en/android/>.
-
-Is Nagram not in your language, or the translation is incorrect or incomplete? Get involved in the translations on our [Weblate](https://xtaolabs.crowdin.com/nagram).
-
-[![Crowdin](https://badges.crowdin.net/e/156df3a631d257cc6b57301566d545fb/localized.svg)](https://xtaolabs.crowdin.com/nagram)
-
-## Thanks
-
-- [NekoX](https://web.archive.org/web/20240306062834/https://github.com/NekoX-Dev/NekoX)
-- [Nekogram](https://gitlab.com/Nekogram/Nekogram)
-- [Pigeongram](https://gitlab.com/JasonKhew96/Nekogram)
-- [Nullgram](https://github.com/qwq233/Nullgram)
-- [TeleTux](https://github.com/TeleTux/TeleTux)
-- [OwlGram](https://github.com/OwlGramDev/OwlGram)
+- [Nagram](https://github.com/NextAlone/Nagram) by [@NextAlone](https://github.com/NextAlone)
+- [NekoX](https://github.com/NekoX-Dev/NekoX) and [Nekogram](https://gitlab.com/Nekogram/Nekogram)
+- Telegram for Android, Copyright Nikolai Kudashov
+- The Beepgram wordmark is set in [Nunito](https://github.com/googlefonts/nunito)
+  ([SIL OFL 1.1](branding/fonts/OFL.txt))

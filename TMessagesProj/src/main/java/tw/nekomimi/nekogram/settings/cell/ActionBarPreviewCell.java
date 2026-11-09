@@ -169,7 +169,7 @@ public class ActionBarPreviewCell extends FrameLayout implements NotificationCen
             }
         }
         if (title.equals(LocaleController.getString(R.string.NekoX)) && !NaConfig.INSTANCE.getUseSystemFontInTitle().Bool()) {
-            Drawable logoDrawable = ContextCompat.getDrawable(getContext(), R.drawable.nagram_logo_2);
+            Drawable logoDrawable = ContextCompat.getDrawable(getContext(), R.drawable.beepgram_logo_2);
             if (logoDrawable != null) {
                 logoDrawable = logoDrawable.mutate();
                 logoDrawable.setBounds(0, AndroidUtilities.dp(2), logoDrawable.getIntrinsicWidth(), AndroidUtilities.dp(2) + logoDrawable.getIntrinsicHeight());
